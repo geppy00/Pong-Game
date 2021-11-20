@@ -8,8 +8,18 @@ import javax.swing.*;
 
 public class Score extends Rectangle {
     
+    //ATTRIBUTI
+    protected static int SCORE_WIDTH;
+    protected static int SCORE_HEIGHT;
+    protected int scorePlayer1;
+    protected int scorePlayer2;
+    
     //COSTRUTTORI
     public Score() {
+        
+    }
+    
+    public Score(int width, int height) {
         
     }
     

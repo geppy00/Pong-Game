@@ -8,6 +8,11 @@ import javax.swing.*;
 
 public class Ball extends Rectangle {
     
+    //ATTRIBUTI
+    protected Random random;
+    protected int xVelocity;
+    protected int yVelocity;
+    
     //COSTRUTTORI
     public Ball() {
         
