@@ -59,7 +59,7 @@ public class Paddle extends Rectangle {
                     this.move();
                 }
                 if(e.getKeyCode() == KeyEvent.VK_S) {
-                    this.setYDirection(speed);
+                    this.setYDirection(0);
                     this.move();
                 }
             break;
@@ -70,7 +70,7 @@ public class Paddle extends Rectangle {
                     this.move();
                 }
                 if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    this.setYDirection(speed);
+                    this.setYDirection(0);
                     this.move();
                 }
             break;
@@ -87,10 +87,10 @@ public class Paddle extends Rectangle {
     
     public void draw(Graphics graphics) {
         if(this.id == 1) {
-            graphics.setColor(Color.YELLOW);
+            graphics.setColor(Color.WHITE);
         }
         else {
-            graphics.setColor(Color.CYAN);
+            graphics.setColor(Color.white);
         }
         
         graphics.fillRect(this.x, this.y, this.width, this.height); //ricavati dal rettangolo padre

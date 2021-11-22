@@ -39,7 +39,8 @@ public class GamePanel extends JPanel implements Runnable{
     
     //METODI
     public void newBall() {
-        
+        this.random = new Random();
+        this.ball = new Ball((GAME_WIDTH / 2) - (BALL_DIAMETER / 2), this.random.nextInt(GAME_HEIGHT - BALL_DIAMETER), BALL_DIAMETER, BALL_DIAMETER);
     }
     
     public void newPaddles() {
@@ -58,14 +59,49 @@ public class GamePanel extends JPanel implements Runnable{
     public void draw(Graphics graphics) {
         this.paddle1.draw(graphics);
         this.paddle2.draw(graphics);
+        this.ball.draw(graphics);
+        this.score.draw(graphics);
     }
     
     public void move() {
-        
+        this.paddle1.move();
+        this.paddle2.move();
+        this.ball.move();
     }
     
     public void checkCollision() {
-        //COLLISIONI CON IL BORDO DEL FRAME
+        //COLLISIONI CON IL BORDO DEL FRAME PER LA PALLA
+        if(this.ball.y <= 0 || this.ball.y >= GAME_HEIGHT-BALL_DIAMETER) {
+            this.ball.setYDirection(-(this.ball.yVelocity));
+        }
+        
+        //COLLISIONE DELLA PALLA CON I PADDLE
+        if(this.ball.intersects(this.paddle1)) {
+            this.ball.xVelocity = Math.abs(this.ball.xVelocity);
+            //aumentiamo la Difficolta;
+            this.ball.xVelocity += 0.7F; 
+            if(this.ball.yVelocity > 0)
+                this.ball.yVelocity += 0.7F;
+            else
+                this.ball.yVelocity -= 0.7F;
+            
+            this.ball.setYDirection(this.ball.yVelocity);
+            this.ball.setXDirection(this.ball.xVelocity);
+        }
+        if(this.ball.intersects(this.paddle2)) {
+            this.ball.xVelocity = Math.abs(this.ball.xVelocity);
+            //aumentiamo la Difficolta;
+            this.ball.xVelocity += 0.7F; 
+            if(this.ball.yVelocity > 0)
+                this.ball.yVelocity += 0.7F;
+            else
+                this.ball.yVelocity -= 0.7F;
+            
+            this.ball.setYDirection(this.ball.yVelocity);
+            this.ball.setXDirection(-(this.ball.xVelocity));
+        }
+        
+        //COLLISIONI CON IL BORDO DEL FRAME PER I PADDLE
         if(this.paddle1.y <= 0)
             this.paddle1.y = 0;
         
@@ -77,6 +113,21 @@ public class GamePanel extends JPanel implements Runnable{
         
         if(this.paddle2.y >= (GAME_HEIGHT - PADDLE_HEIGHT))
             this.paddle2.y = GAME_HEIGHT - PADDLE_HEIGHT;
+        
+        //PUNTO PER PLAYER 1 E CREIAMO NUOVA BALL E PADDLE
+        if(this.ball.x <= 0) {
+            this.score.scorePlayer1++;
+            this.newBall();
+            this.newPaddles();
+            System.out.println("PLAYER 1 = "+this.score.scorePlayer1);
+        }
+        //PUNTO PER PLAYER 2 E CREIAMO NUOVA BALL E PADDLE
+        if(this.ball.x >= GAME_WIDTH-BALL_DIAMETER) {
+            this.score.scorePlayer2++;
+            this.newBall();
+            this.newPaddles();
+            System.out.println("PLAYER 2 = "+this.score.scorePlayer2);
+        }
             
     }
     
